@@ -1,7 +1,5 @@
 {
-  "name": "example",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "next-keycloak-example",
   "license": "MIT",
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
