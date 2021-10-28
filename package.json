@@ -3,7 +3,7 @@
   "description": "An authentication library based on Keycloak for NextJs applications",
   "author": "Elyas Mosayebi",
   "module": "dist/next-keycloak.esm.js",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
