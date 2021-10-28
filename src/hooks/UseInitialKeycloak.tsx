@@ -1,53 +1,80 @@
 import { useEffect, useState } from 'react';
-import { KeycloakInstance } from 'keycloak-js';
+import {
+  KeycloakInitOptions,
+  KeycloakInstance,
+  KeycloakLoginOptions,
+  KeycloakLogoutOptions,
+  KeycloakRegisterOptions,
+} from 'keycloak-js';
 import { INextKeycloakAuthContext } from '../interfaces';
+import { getUserFromToken } from '../utils/Util';
 
 /**
  *
  * @description A hook to initialize and provide Keycloak functionalities
- * @param keycloak
+ * @param keycloakInstance
  * @returns
  */
 export const useInitKeycloak = (
-  keycloak: KeycloakInstance | undefined
+  keycloakInstance: KeycloakInstance,
+  initOption: KeycloakInitOptions = {}
 ): INextKeycloakAuthContext => {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [keycloak, setKeycloak] = useState<KeycloakInstance>();
 
   useEffect(() => {
-    if (keycloak) {
-      keycloak
-        .init({
-          onLoad: 'check-sso',
-          silentCheckSsoRedirectUri:
-            'http://localhost:3000/silent-check-sso.html',
-        })
-        .then(authenticated => {
-          setAuthenticated(authenticated);
-        })
-        .catch(function() {
-          console.error('failed to initialize keycloak');
-        });
+    if (keycloakInstance) {
+      initialize();
     }
   }, []);
 
-  const login = () => {
-    if (keycloak) {
-      const appUrl = window.location.origin;
-      window.location.href = keycloak.createLoginUrl({
-        redirectUri: appUrl,
-      });
+  const initialize = async () => {
+    try {
+      await keycloakInstance.init(initOption);
+      setKeycloak(keycloakInstance);
+    } catch (e) {
+      console.error('failed to initialize keycloak');
     }
   };
 
-  const logout = () => {
+  const login = (option: KeycloakLoginOptions) => {
     if (keycloak) {
-      keycloak.logout();
+      return keycloak.login(option);
     }
+    return;
+  };
+
+  const logout = (option: KeycloakLogoutOptions) => {
+    if (keycloak !== undefined) {
+      return keycloak.logout(option);
+    }
+    return;
+  };
+
+  const register = (option: KeycloakRegisterOptions) => {
+    if (keycloak) {
+      return keycloak.register(option);
+    }
+    return;
+  };
+
+  const accountManagement = () => {
+    if (keycloak) {
+      return keycloak.accountManagement();
+    }
+    return;
   };
 
   return {
-    authenticated,
-    logout,
+    loading: !(keycloak?.authenticated && keycloak.token !== undefined),
+    token: keycloak ? keycloak.token : '',
+    authenticated: keycloak ? Boolean(keycloak.authenticated) : false,
+    userInfo: keycloak?.authenticated
+      ? getUserFromToken(String(keycloak.token))
+      : undefined,
     login,
+    logout,
+    register,
+    accountManagement,
+    // keycloakInstance: keycloak,
   };
 };

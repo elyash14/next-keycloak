@@ -7,3 +7,6 @@ An authentication library based on Keycloak for NextJs applications
 ## Authors
 
 - [@elyash14](https://github.com/elyash14)
+
+public client
+https://www.keycloak.org/docs/latest/securing_apps/index.html#properties
