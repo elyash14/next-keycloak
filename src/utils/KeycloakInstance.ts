@@ -20,7 +20,11 @@ export const getKeycloakInstance = (
     return undefined;
   }
 
-  keycloakInstance = new Keycloak(keycloakConfig);
+  const createNewInstance =
+        typeof Keycloak === 'function'
+            ? () => Keycloak(keycloakConfig)
+            : () => new Keycloak(keycloakConfig);
+  keycloakInstance = createNewInstance();
 
   return keycloakInstance;
 };

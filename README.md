@@ -2,7 +2,7 @@
 
 ### _An authentication library based on Keycloak for NextJs applications_
 
-Next Keycloak powerd by Typescript, React and keycloak
+Next Keycloak powered by Typescript, React and keycloak
 Use it as a react provider to authenticate keycloak users
 
 [![NPM version](https://img.shields.io/badge/npm-v2.0.0-blue)]()
