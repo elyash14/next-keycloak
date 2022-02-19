@@ -28,7 +28,7 @@ or
 yarn add @elyash14/next-keycloak
 ```
 
-Make a confi file in `_app.tsx` or `_app.jsx` and wrapp your component with **NextKeycloakAuthProvider** like this:
+Make a config file in `_app.tsx` or `_app.jsx` and wrap your component with **NextKeycloakAuthProvider** like this:
 
 ```shell
 const config:KeycloakConfig = {
@@ -53,7 +53,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 export default MyApp;
 ```
 
-Also you can provide **initialOption** based on [keycloak documentation](https://www.keycloak.org/docs/latest/securing_apps/index.html#_javascript_adapter) and pass it to the provider. Note that above example support "silent check sso" and needs a html file with below content in your public folder.
+Also you can provide **initialOption** based on [keycloak documentation](https://www.keycloak.org/docs/latest/securing_apps/index.html#_javascript_adapter) and pass it to the provider. Note that the above example supports "silent check sso" and needs an HTML in your public folder. Create the `silent-check-sso.html` file in the public folder and put the below content into it.
 
 ```shell
 <html>
